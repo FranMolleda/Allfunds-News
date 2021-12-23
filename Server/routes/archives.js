@@ -30,7 +30,7 @@ router.delete("/:id", async (req, res) => {
       return res.status(404).json({ msg: "Archives not found" });
     }
 
-    await News.findOneAndRemove({ _id: req.params.id });
+    await Archives.findOneAndRemove({ _id: req.params.id });
     res.json({ msg: "Archives delete " });
   } catch (error) {
     console.log(error);
