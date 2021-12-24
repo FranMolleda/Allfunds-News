@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { Button, Offcanvas, Form, Alert } from "react-bootstrap";
 import { PostStoredNews } from "../../controllers/newsController";
+import { GetStoredNews } from "../../controllers/newsController";
 
-function NewsForm({ news, setNews, reloadnews, setReloadNews }) {
+function NewsForm({ news, reloadnews, setNews, setReloadNews, setStoredNews }) {
   const [show, setShow] = useState(false);
   const [msg, setMsg] = useState(false);
   const { title, description, content, author } = news;
@@ -19,9 +20,9 @@ function NewsForm({ news, setNews, reloadnews, setReloadNews }) {
 
     if (
       title.trim() === "" ||
-      description === "" ||
-      content === "" ||
-      author === ""
+      description.trim() === "" ||
+      content.trim() === "" ||
+      author.trim() === ""
     ) {
       handleShow();
       setMsg(true);
@@ -31,6 +32,7 @@ function NewsForm({ news, setNews, reloadnews, setReloadNews }) {
     setReloadNews(reloadnews + 1);
 
     PostStoredNews(news);
+
     setNews({
       title: "",
       description: "",
@@ -38,13 +40,15 @@ function NewsForm({ news, setNews, reloadnews, setReloadNews }) {
       author: "",
     });
 
+    GetStoredNews(setStoredNews);
+
     setMsg(false);
     handleClose();
   };
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
+      <Button variant="secondary" onClick={handleShow}>
         Add News
       </Button>
 
@@ -91,7 +95,7 @@ function NewsForm({ news, setNews, reloadnews, setReloadNews }) {
                 name="author"
               />
             </Form.Group>
-            <Button variant="success" type="submit" onClick={handleShow}>
+            <Button variant="secondary" type="submit" onClick={handleShow}>
               Save
             </Button>
           </Form>

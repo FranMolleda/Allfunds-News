@@ -12,13 +12,14 @@ import { PostStoredArchives } from "../../controllers/archivesController";
 const News = () => {
   const {
     news,
-    setNews,
     storednews,
-    setStoredNews,
-    archivednews,
-    setArchivedNews,
     archivednewstored,
-    setArchivedNewStored,
+    newxidx,
+    setNews,
+    setStoredNews,
+    setArchivedNews,
+    setArchivedStored,
+    setNewsIdx,
   } = useContext(NewsContext);
 
   const [reloadnews, setReloadNews] = useState(0);
@@ -27,34 +28,40 @@ const News = () => {
   useEffect(() => {
     const getNews = () => {
       GetStoredNews(setStoredNews);
+      setReloadNews(reloadnews);
     };
     getNews();
+
+    let mounted = true;
+    return function cleanup() {
+      mounted = false;
+    };
   }, [reloadnews, setStoredNews]);
 
-  const handleArchiveButton = async (report) => {
+  const handleArchiveButton = (report) => {
     try {
-      await setArchivedNews(report);
-      await setArchivedNewStored([...archivednewstored, report]);
+      setArchivedNews(report);
+      setArchivedStored([...archivednewstored, report]);
       DeleteStoredNews(report._id);
+      PostStoredArchives(report);
       redirectArchives("/archives");
-      await PostStoredArchives(report);
     } catch (error) {
       console.log(error);
     }
   };
-  console.log(archivednewstored);
-  console.log(archivednews);
 
   return (
     <Container>
-      <h1 style={{ textAlign: "center" }}>News</h1>
+      <h1 className="mt-5 text-center text-secondary">News</h1>
       <NewsForm
         news={news}
         storednews={storednews}
+        newxidx={newxidx}
         setNews={setNews}
         reloadnews={reloadnews}
         setStoredNews={setStoredNews}
         setReloadNews={setReloadNews}
+        setNewsIdx={setNewsIdx}
       />
       {storednews.length > 0 ? (
         storednews.map((report) => (
@@ -63,17 +70,20 @@ const News = () => {
             <Card.Body>
               <Card.Title>{report.description}</Card.Title>
               <Card.Text>{report.content}</Card.Text>
+              <footer className="blockquote-footer mt-4">
+                Written by: <cite title="Source Title">{report.author}</cite>
+              </footer>
               <Button
-                variant="primary"
+                variant="secondary"
                 onClick={() => handleArchiveButton(report)}
               >
-                Delete
+                Archive
               </Button>
             </Card.Body>
           </Card>
         ))
       ) : (
-        <h2>No News yet</h2>
+        <h2 className="mt-5 text-center text-secondary">No News yet</h2>
       )}
     </Container>
   );

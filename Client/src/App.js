@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import NewsProvider from "./context/newsContext";
 import Header from "./components/Layout/Header";
-import News from "./components/news/News";
+import New from "./components/news/New";
 import Archives from "./components/archives/Archives";
 
 function App() {
@@ -13,7 +13,7 @@ function App() {
         <div>
           <Header />
           <Routes>
-            <Route path="/" element={<News />}></Route>
+            <Route path="/" element={<New />}></Route>
             <Route path="/archives" element={<Archives />}></Route>
           </Routes>
         </div>

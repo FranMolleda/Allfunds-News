@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { NewsContext } from "../../context/newsContext";
 import {
   GetStoredArchives,
@@ -15,23 +15,23 @@ const Archives = () => {
     archivednews,
     setArchivedNews,
     archivednewstored,
-    setArchivedNewStored,
+    setArchivedStored,
   } = useContext(NewsContext);
-  useEffect(() => {
-    const getNews = () => {
-      GetStoredArchives(setArchivedNewStored);
-    };
-    getNews();
-  }, [setArchivedNewStored]);
 
-  const handleArchiveButton = async (report) => {
+  useEffect(() => {
+    getArchives();
+  }, [archivednewstored]);
+
+  const getArchives = async () => {
+    await GetStoredArchives(setArchivedStored);
+  };
+  const handleArchiveButton = (report) => {
     DeleteStoredArchives(report._id);
   };
 
-  console.log(archivednewstored);
   return (
     <Container>
-      <h1>Desde Archives</h1>
+      <h1 className="mt-5 text-center text-secondary">Archives</h1>
       {archivednewstored.length > 0 ? (
         archivednewstored.map((report) => (
           <Card className="mb-5 mt-3" key={report._id}>
@@ -39,17 +39,22 @@ const Archives = () => {
             <Card.Body>
               <Card.Title>{report.description}</Card.Title>
               <Card.Text>{report.content}</Card.Text>
+              <footer className="blockquote-footer mt-4">
+                Written by: <cite title="Source Title">{report.author}</cite>
+              </footer>
               <Button
-                variant="primary"
+                variant="secondary"
                 onClick={() => handleArchiveButton(report)}
               >
-                Delete
+                Remove
               </Button>
             </Card.Body>
           </Card>
         ))
       ) : (
-        <h2>No News yet</h2>
+        <h2 className="mt-5 text-center text-secondary">
+          No News Archived yet
+        </h2>
       )}
     </Container>
   );
