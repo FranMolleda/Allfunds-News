@@ -20,7 +20,6 @@ const News = () => {
     setStoredNews,
     setArchivedNews,
     setArchivedStored,
-    setNewsIdx,
   } = useContext(NewsContext);
 
   const [reloadnews, setReloadNews] = useState(0);
@@ -28,22 +27,22 @@ const News = () => {
   const redirectArchives = useNavigate();
 
   useEffect(() => {
-    // const getNews = () => {
-    try {
-      GetStoredNews(setStoredNews);
-      setReloadNews(reloadnews);
-    } catch (error) {
-      console.log(error);
-    }
-    setLoading(false);
-    // };
-    // getNews();
-  }, []);
+    const getNews = async () => {
+      try {
+        await GetStoredNews(setStoredNews);
+        // setReloadNews(reloadnews);
+      } catch (error) {
+        console.log(error);
+      }
+      setLoading(false);
+    };
+    getNews();
+  }, [setStoredNews]);
 
   const handleArchiveButton = async (report) => {
     try {
       await setArchivedNews(report);
-      await setArchivedStored([report, ...archivednewstored]);
+      await setArchivedStored([...archivednewstored, report]);
       await DeleteStoredNews(report._id);
       await PostStoredArchives(report);
     } catch (error) {
@@ -98,7 +97,6 @@ const News = () => {
             reloadnews={reloadnews}
             setStoredNews={setStoredNews}
             setReloadNews={setReloadNews}
-            setNewsIdx={setNewsIdx}
           />
         </>
       )}

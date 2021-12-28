@@ -4,6 +4,7 @@ export const NewsContext = createContext();
 
 const NewsProvider = (props) => {
   const [news, setNews] = useState({
+    id: "",
     title: "",
     description: "",
     content: "",
@@ -13,6 +14,7 @@ const NewsProvider = (props) => {
   const [storednews, setStoredNews] = useState([]);
 
   const [archivednews, setArchivedNews] = useState({
+    id: "",
     title: "",
     description: "",
     content: "",
