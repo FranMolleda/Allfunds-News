@@ -16,7 +16,6 @@ const News = () => {
     news,
     storednews,
     archivednewstored,
-    newxidx,
     setNews,
     setStoredNews,
     setArchivedNews,
@@ -29,17 +28,17 @@ const News = () => {
   const redirectArchives = useNavigate();
 
   useEffect(() => {
-    const getNews = () => {
-      try {
-        GetStoredNews(setStoredNews);
-        setReloadNews(reloadnews);
-      } catch (error) {
-        console.log(error);
-      }
-      setLoading(false);
-    };
-    getNews();
-  }, [reloadnews, setStoredNews]);
+    // const getNews = () => {
+    try {
+      GetStoredNews(setStoredNews);
+      setReloadNews(reloadnews);
+    } catch (error) {
+      console.log(error);
+    }
+    setLoading(false);
+    // };
+    // getNews();
+  }, []);
 
   const handleArchiveButton = async (report) => {
     try {
@@ -95,7 +94,6 @@ const News = () => {
           <NewsForm
             news={news}
             storednews={storednews}
-            newxidx={newxidx}
             setNews={setNews}
             reloadnews={reloadnews}
             setStoredNews={setStoredNews}

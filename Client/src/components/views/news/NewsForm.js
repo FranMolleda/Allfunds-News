@@ -50,10 +50,13 @@ function NewsForm({
       return;
     }
 
-    setStoredNews([...storednews, news]);
-
     setReloadNews(reloadnews + 1);
-    GetStoredNews(setStoredNews);
+
+    const response = [...storednews, news];
+
+    setStoredNews(response);
+
+    // GetStoredNews(setStoredNews);
 
     PostStoredNews(news);
 
@@ -83,7 +86,7 @@ function NewsForm({
         ) : null}
         {msgexists ? (
           <Alert className="text-center" variant="danger">
-            News title already exists
+            Title already exists
           </Alert>
         ) : null}
         <Offcanvas.Header closeButton>

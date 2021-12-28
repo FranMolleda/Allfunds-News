@@ -28,9 +28,9 @@ exports.postArchived = async (req, res) => {
 
 exports.deleteArchived = async (req, res) => {
   try {
-    let newsDelete = await Archived.findById(req.params.id);
+    let archiveDelete = await Archived.findById(req.params.id);
 
-    if (!newsDelete) {
+    if (!archiveDelete) {
       return res.status(404).json({ msg: "Archives not found" });
     }
 
