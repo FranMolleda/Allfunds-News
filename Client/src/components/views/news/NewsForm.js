@@ -41,7 +41,7 @@ function NewsForm({ news, storednews, setNews, setStoredNews }) {
     if (checkTitle.includes(title)) {
       setMsgExists(true);
       handleShow();
-      await setMsg(false);
+      setMsg(false);
       return;
     }
 
