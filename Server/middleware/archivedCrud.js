@@ -14,6 +14,7 @@ exports.postArchived = async (req, res) => {
 
   try {
     const archiveExists = await Archived.findOne({ title });
+
     if (archiveExists) {
       return res.status(400).json({ msg: "Archive already exists" });
     }

@@ -14,9 +14,11 @@ exports.postNews = async (req, res) => {
 
   try {
     const newsExists = await News.findOne({ title });
+
     if (newsExists) {
       return res.status(400).json({ msg: "News already exists" });
     }
+
     const newNews = await new News(req.body);
     await newNews.save();
     res.json(newNews);
@@ -28,6 +30,7 @@ exports.postNews = async (req, res) => {
 exports.deleteNews = async (req, res) => {
   try {
     let newsDelete = await News.findById(req.params.id);
+
     if (!newsDelete) {
       return res.status(404).json({ msg: "News not found" });
     }

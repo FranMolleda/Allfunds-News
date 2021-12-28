@@ -1,9 +1,9 @@
 import { ClientAxiosBack } from "../config/configAxios";
 
-export const GetStoredArchives = async (setArchivedStored) => {
+export const GetStoredArchives = async (setArchivedNewsStored) => {
   try {
     const response = await ClientAxiosBack.get("/archived");
-    setArchivedStored(response.data);
+    setArchivedNewsStored(response.data);
   } catch (error) {
     console.log(error);
   }

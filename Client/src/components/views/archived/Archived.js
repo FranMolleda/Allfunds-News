@@ -7,17 +7,15 @@ import {
   GetStoredArchives,
   DeleteStoredArchives,
 } from "../../../controllers/archivesController";
-import { ClientAxiosBack } from "../../../config/configAxios";
 
 const Archives = () => {
-  const { archivednewstored, setArchivedStored } = useContext(NewsContext);
+  const { archivednewstored, setArchivedNewsStored } = useContext(NewsContext);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getArchives = async () => {
       try {
-        const response = await ClientAxiosBack.get("/archived");
-        setArchivedStored(response.data);
+        await GetStoredArchives(setArchivedNewsStored);
       } catch (error) {
         console.log(error);
       }
@@ -25,15 +23,15 @@ const Archives = () => {
       setLoading(false);
     };
     getArchives();
-  }, [setArchivedStored]);
+  }, [setArchivedNewsStored]);
 
   const handleArchiveButton = async (report) => {
     try {
       await DeleteStoredArchives(report._id);
-      const archivedfilter = await archivednewstored.filter(
+      const archivedfilter = archivednewstored.filter(
         (archive) => archive._id !== report._id
       );
-      setArchivedStored(archivedfilter);
+      setArchivedNewsStored(archivedfilter);
     } catch (error) {
       console.log(error);
     }
@@ -43,15 +41,19 @@ const Archives = () => {
     <Container>
       {loading ? (
         <>
-          <h1 className="mt-5 text-center text-secondary">Archived</h1>
+          <h1 className="shadow p-3 mt-5 text-center text-secondary">
+            Archived News
+          </h1>
           <Loading />
         </>
       ) : (
         <>
-          <h1 className="mt-5 text-center text-secondary">Archived</h1>
+          <h1 className="shadow p-3 mt-5 mb-5 text-center text-secondary">
+            Archived News
+          </h1>
           {archivednewstored.length > 0 ? (
             archivednewstored.map((report, i) => (
-              <Card className="mb-5 mt-3" key={i}>
+              <Card className="shadow p-3 mb-5 mt-3" key={i}>
                 <Card.Header as="h5">{report.title}</Card.Header>
                 <Card.Body>
                   <Card.Title>{report.description}</Card.Title>
@@ -74,7 +76,7 @@ const Archives = () => {
               </Card>
             ))
           ) : (
-            <Alert variant="secondary" className="text-center">
+            <Alert variant="secondary" className="text-center mb-5">
               No News Archived yet
             </Alert>
           )}

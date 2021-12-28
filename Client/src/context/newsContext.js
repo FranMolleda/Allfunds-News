@@ -21,7 +21,7 @@ const NewsProvider = (props) => {
     author: "",
   });
 
-  const [archivednewstored, setArchivedStored] = useState([]);
+  const [archivednewstored, setArchivedNewsStored] = useState([]);
 
   return (
     <NewsContext.Provider
@@ -33,7 +33,7 @@ const NewsProvider = (props) => {
         setNews,
         setArchivedNews,
         setStoredNews,
-        setArchivedStored,
+        setArchivedNewsStored,
       }}
     >
       {props.children}
