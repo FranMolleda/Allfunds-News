@@ -70,7 +70,7 @@ Use MongoDB to store and get all documents for Frontend application. Documents m
 
 Clone this repository: https://github.com/FranMolleda/Allfunds-News.git
 
-Instal all dependies: `npm install` 
+Instal all dependies in server and client folders: `npm install` 
 
 ## Available Scripts
 
