@@ -54,11 +54,11 @@ function NewsForm({
 
     const response = [...storednews, news];
 
-    setStoredNews(response);
+    await PostStoredNews(news);
 
-    // GetStoredNews(setStoredNews);
+    GetStoredNews(setStoredNews);
 
-    PostStoredNews(news);
+    // setStoredNews(response);
 
     setNews({
       title: "",
