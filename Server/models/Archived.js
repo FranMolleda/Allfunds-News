@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const ArchivesSchema = mongoose.Schema({
+const ArchivedSchema = mongoose.Schema({
   title: {
     type: String,
     required: true,
@@ -27,4 +27,4 @@ const ArchivesSchema = mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("Archives", ArchivesSchema);
+module.exports = mongoose.model("Archived", ArchivedSchema);

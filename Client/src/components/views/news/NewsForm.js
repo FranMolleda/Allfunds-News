@@ -1,11 +1,22 @@
 import { useState } from "react";
 import { Button, Offcanvas, Form, Alert } from "react-bootstrap";
-import { PostStoredNews } from "../../controllers/newsController";
-import { GetStoredNews } from "../../controllers/newsController";
+import {
+  PostStoredNews,
+  GetStoredNews,
+} from "../../../controllers/newsController";
 
-function NewsForm({ news, reloadnews, setNews, setReloadNews, setStoredNews }) {
+function NewsForm({
+  news,
+  reloadnews,
+  storednews,
+  setNews,
+  setReloadNews,
+  setStoredNews,
+}) {
   const [show, setShow] = useState(false);
   const [msg, setMsg] = useState(false);
+  const [msgexists, setMsgExists] = useState(false);
+
   const { title, description, content, author } = news;
 
   const handleClose = () => setShow(false);
@@ -14,6 +25,10 @@ function NewsForm({ news, reloadnews, setNews, setReloadNews, setStoredNews }) {
   const handleNewsInput = (e) => {
     setNews({ ...news, [e.target.name]: e.target.value });
   };
+
+  const checkTitle = storednews.map((element) => {
+    return element.title;
+  });
 
   const handleNewsForm = async (e) => {
     e.preventDefault();
@@ -29,7 +44,16 @@ function NewsForm({ news, reloadnews, setNews, setReloadNews, setStoredNews }) {
       return;
     }
 
+    if (checkTitle.includes(title)) {
+      setMsgExists(true);
+      handleShow();
+      return;
+    }
+
+    setStoredNews([...storednews, news]);
+
     setReloadNews(reloadnews + 1);
+    GetStoredNews(setStoredNews);
 
     PostStoredNews(news);
 
@@ -40,22 +64,30 @@ function NewsForm({ news, reloadnews, setNews, setReloadNews, setStoredNews }) {
       author: "",
     });
 
-    GetStoredNews(setStoredNews);
-
+    setMsgExists(false);
     setMsg(false);
     handleClose();
   };
 
   return (
     <>
-      <Button variant="secondary" onClick={handleShow}>
+      <Button variant="secondary" className="mb-5" onClick={handleShow}>
         Add News
       </Button>
 
       <Offcanvas show={show} onHide={handleClose}>
-        {msg ? <Alert variant="danger">All fields must be filled</Alert> : null}
+        {msg ? (
+          <Alert className="text-center" variant="danger">
+            All fields must be filled
+          </Alert>
+        ) : null}
+        {msgexists ? (
+          <Alert className="text-center" variant="danger">
+            News title already exists
+          </Alert>
+        ) : null}
         <Offcanvas.Header closeButton>
-          <Offcanvas.Title>New News</Offcanvas.Title>
+          <Offcanvas.Title>Post News</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
           <Form onSubmit={handleNewsForm}>

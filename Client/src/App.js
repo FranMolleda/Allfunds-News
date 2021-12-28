@@ -3,20 +3,20 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import NewsProvider from "./context/newsContext";
 import Header from "./components/Layout/Header";
-import New from "./components/news/New";
-import Archives from "./components/archives/Archives";
+import Footer from "./components/Layout/Footer";
+import New from "./components/views/news/New";
+import Archived from "./components/views/archived/Archived";
 
 function App() {
   return (
     <NewsProvider>
       <Router>
-        <div>
-          <Header />
-          <Routes>
-            <Route path="/" element={<New />}></Route>
-            <Route path="/archives" element={<Archives />}></Route>
-          </Routes>
-        </div>
+        <Header />
+        <Routes>
+          <Route path="/" element={<New />}></Route>
+          <Route path="/archived" element={<Archived />}></Route>
+        </Routes>
+        <Footer />
       </Router>
     </NewsProvider>
   );

@@ -1,10 +1,9 @@
 import { ClientAxiosBack } from "../config/configAxios";
 
-//Get All Archives from BBDD
-export const GetStoredArchives = async (setStoredArchives) => {
+export const GetStoredArchives = async (setArchivedStored) => {
   try {
-    const response = await ClientAxiosBack.get("/archives");
-    await setStoredArchives(response.data);
+    const response = await ClientAxiosBack.get("/archived");
+    setArchivedStored(response.data);
   } catch (error) {
     console.log(error);
   }
@@ -12,7 +11,7 @@ export const GetStoredArchives = async (setStoredArchives) => {
 
 export const PostStoredArchives = async (archive) => {
   try {
-    await ClientAxiosBack.post("/archives", archive);
+    await ClientAxiosBack.post("/archived", archive);
   } catch (error) {
     console.log(error);
   }
@@ -20,7 +19,7 @@ export const PostStoredArchives = async (archive) => {
 
 export const DeleteStoredArchives = async (archivesId) => {
   try {
-    await ClientAxiosBack.delete(`/archives/${archivesId}`);
+    await ClientAxiosBack.delete(`/archived/${archivesId}`);
   } catch (error) {
     console.log(error);
   }

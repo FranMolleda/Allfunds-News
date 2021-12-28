@@ -1,6 +1,5 @@
 import { ClientAxiosBack } from "../config/configAxios";
 
-//Get All News from BBDD
 export const GetStoredNews = async (setStoredNews) => {
   try {
     const response = await ClientAxiosBack.get("/news");
