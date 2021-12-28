@@ -60,6 +60,12 @@ const News = () => {
         </>
       ) : (
         <>
+          <NewsForm
+            news={news}
+            storednews={storednews}
+            setNews={setNews}
+            setStoredNews={setStoredNews}
+          />
           <h1 className="shadow p-3 mt-5 mb-5 text-center text-secondary">
             Allfunds News
           </h1>
@@ -92,12 +98,6 @@ const News = () => {
               No News yet
             </Alert>
           )}
-          <NewsForm
-            news={news}
-            storednews={storednews}
-            setNews={setNews}
-            setStoredNews={setStoredNews}
-          />
         </>
       )}
     </Container>

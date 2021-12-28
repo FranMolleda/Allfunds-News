@@ -61,7 +61,7 @@ function NewsForm({ news, storednews, setNews, setStoredNews }) {
 
   return (
     <>
-      <Button variant="secondary" className="mb-5" onClick={handleShow}>
+      <Button variant="secondary" className="mt-5" onClick={handleShow}>
         Add News
       </Button>
 
