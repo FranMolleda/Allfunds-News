@@ -14,7 +14,7 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<New />}></Route>
-          <Route path="/archived" element={<Archived />}></Route>
+          <Route path="/archived/" element={<Archived />}></Route>
         </Routes>
         <Footer />
       </Router>
