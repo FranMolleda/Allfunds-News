@@ -5,19 +5,10 @@ import {
   GetStoredNews,
 } from "../../../controllers/newsController";
 
-function NewsForm({
-  news,
-  reloadnews,
-  storednews,
-  setNews,
-  setReloadNews,
-  setStoredNews,
-}) {
+function NewsForm({ news, storednews, setNews, setStoredNews }) {
   const [show, setShow] = useState(false);
   const [msg, setMsg] = useState(false);
   const [msgexists, setMsgExists] = useState(false);
-
-  const { title, description, content, author } = news;
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -25,6 +16,8 @@ function NewsForm({
   const handleNewsInput = (e) => {
     setNews({ ...news, [e.target.name]: e.target.value });
   };
+
+  const { title, description, content, author } = news;
 
   const checkTitle = storednews.map((element) => {
     return element.title;
@@ -41,24 +34,20 @@ function NewsForm({
     ) {
       handleShow();
       setMsg(true);
+      setMsgExists(false);
       return;
     }
 
     if (checkTitle.includes(title)) {
       setMsgExists(true);
       handleShow();
+      await setMsg(false);
       return;
     }
-
-    setReloadNews(reloadnews + 1);
-
-    const response = [...storednews, news];
 
     await PostStoredNews(news);
 
     GetStoredNews(setStoredNews);
-
-    // setStoredNews(response);
 
     setNews({
       title: "",
@@ -67,8 +56,6 @@ function NewsForm({
       author: "",
     });
 
-    setMsgExists(false);
-    setMsg(false);
     handleClose();
   };
 
@@ -81,7 +68,7 @@ function NewsForm({
       <Offcanvas show={show} onHide={handleClose}>
         {msg ? (
           <Alert className="text-center" variant="danger">
-            All fields must be filled
+            All fields are required
           </Alert>
         ) : null}
         {msgexists ? (
@@ -94,7 +81,7 @@ function NewsForm({
         </Offcanvas.Header>
         <Offcanvas.Body>
           <Form onSubmit={handleNewsForm}>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Group className="mb-5" controlId="formBasicEmail">
               <Form.Label>Title</Form.Label>
               <Form.Control
                 value={title}

@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const News = require("../models/News");
 const newsCrud = require("../middleware/newsCrud");
 
 // /news
